@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FicheFrais{% endblock %}
+
+{% block body %}
+    <h1>FicheFrais</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ fiche_frai.id }}</td>
+            </tr>
+            <tr>
+                <th>Nb_justificatif</th>
+                <td>{{ fiche_frai.nbJustificatif }}</td>
+            </tr>
+            <tr>
+                <th>Montant</th>
+                <td>{{ fiche_frai.montant }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_fiche_frais_index') }}">back to list</a>
+
+    <a href="{{ path('app_fiche_frais_edit', {'id': fiche_frai.id}) }}">edit</a>
+
+    {{ include('fiche_frais/_delete_form.html.twig') }}
+{% endblock %}
