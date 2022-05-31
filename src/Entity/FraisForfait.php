@@ -15,13 +15,13 @@ class FraisForfait
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 100)]
+    #[ORM\Column(type: 'string', length: 70)]
     private $libelle;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'float')]
     private $montant;
 
-    #[ORM\OneToMany(mappedBy: 'frais_forfais', targetEntity: LigneFraisForfait::class)]
+    #[ORM\OneToMany(mappedBy: 'idFraisForfait', targetEntity: LigneFraisForfait::class)]
     private $ligneFraisForfaits;
 
     public function __construct()
@@ -46,12 +46,12 @@ class FraisForfait
         return $this;
     }
 
-    public function getMontant(): ?int
+    public function getMontant(): ?float
     {
         return $this->montant;
     }
 
-    public function setMontant(int $montant): self
+    public function setMontant(float $montant): self
     {
         $this->montant = $montant;
 
@@ -70,7 +70,7 @@ class FraisForfait
     {
         if (!$this->ligneFraisForfaits->contains($ligneFraisForfait)) {
             $this->ligneFraisForfaits[] = $ligneFraisForfait;
-            $ligneFraisForfait->setFraisForfais($this);
+            $ligneFraisForfait->setIdFraisForfait($this);
         }
 
         return $this;
@@ -80,16 +80,11 @@ class FraisForfait
     {
         if ($this->ligneFraisForfaits->removeElement($ligneFraisForfait)) {
             // set the owning side to null (unless already changed)
-            if ($ligneFraisForfait->getFraisForfais() === $this) {
-                $ligneFraisForfait->setFraisForfais(null);
+            if ($ligneFraisForfait->getIdFraisForfait() === $this) {
+                $ligneFraisForfait->setIdFraisForfait(null);
             }
         }
 
         return $this;
-    }
-
-    public function __toString()
-    {
-        return $this->libelle;
     }
 }

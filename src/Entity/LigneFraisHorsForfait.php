@@ -13,33 +13,18 @@ class LigneFraisHorsForfait
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\ManyToOne(targetEntity: FicheFrais::class, inversedBy: 'ligneFraisHorsForfaits')]
-    private $fiche_frais;
-
     #[ORM\Column(type: 'date')]
     private $date;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'float')]
     private $montant;
 
-    #[ORM\Column(type: 'string', length: 100)]
+    #[ORM\Column(type: 'string', length: 70)]
     private $libelle;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getFicheFrais(): ?FicheFrais
-    {
-        return $this->fiche_frais;
-    }
-
-    public function setFicheFrais(?FicheFrais $fiche_frais): self
-    {
-        $this->fiche_frais = $fiche_frais;
-
-        return $this;
     }
 
     public function getDate(): ?\DateTimeInterface
@@ -54,12 +39,12 @@ class LigneFraisHorsForfait
         return $this;
     }
 
-    public function getMontant(): ?int
+    public function getMontant(): ?float
     {
         return $this->montant;
     }
 
-    public function setMontant(int $montant): self
+    public function setMontant(float $montant): self
     {
         $this->montant = $montant;
 

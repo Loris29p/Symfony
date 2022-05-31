@@ -15,10 +15,10 @@ class Etat
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 100)]
+    #[ORM\Column(type: 'string', length: 70)]
     private $libelle;
 
-    #[ORM\OneToMany(mappedBy: 'etat', targetEntity: FicheFrais::class)]
+    #[ORM\OneToMany(mappedBy: 'Etat', targetEntity: FicheFrais::class)]
     private $ficheFrais;
 
     public function __construct()
@@ -71,10 +71,5 @@ class Etat
         }
 
         return $this;
-    }
-
-    public function __toString()
-    {
-        return $this->libelle;
     }
 }

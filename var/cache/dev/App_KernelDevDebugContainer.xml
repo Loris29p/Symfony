@@ -21,6 +21,7 @@
       <parameter key="MonologBundle">Symfony\Bundle\MonologBundle\MonologBundle</parameter>
       <parameter key="MakerBundle">Symfony\Bundle\MakerBundle\MakerBundle</parameter>
       <parameter key="SensioFrameworkExtraBundle">Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle</parameter>
+      <parameter key="SymfonyCastsVerifyEmailBundle">SymfonyCasts\Bundle\VerifyEmail\SymfonyCastsVerifyEmailBundle</parameter>
     </parameter>
     <parameter key="kernel.bundles_metadata" type="collection">
       <parameter key="FrameworkBundle" type="collection">
@@ -70,6 +71,10 @@
       <parameter key="SensioFrameworkExtraBundle" type="collection">
         <parameter key="path">/Applications/MAMP/htdocs/Symfony/vendor/sensio/framework-extra-bundle/src</parameter>
         <parameter key="namespace">Sensio\Bundle\FrameworkExtraBundle</parameter>
+      </parameter>
+      <parameter key="SymfonyCastsVerifyEmailBundle" type="collection">
+        <parameter key="path">/Applications/MAMP/htdocs/Symfony/vendor/symfonycasts/verify-email-bundle/src</parameter>
+        <parameter key="namespace">SymfonyCasts\Bundle\VerifyEmail</parameter>
       </parameter>
     </parameter>
     <parameter key="kernel.charset">UTF-8</parameter>
@@ -374,6 +379,21 @@
         <argument type="service" id=".service_locator.jIxfAsi.App\Controller\LigneFraisHorsForfaitController"/>
       </call>
     </service>
+    <service id="App\Controller\RegistrationController" class="App\Controller\RegistrationController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <argument type="service" id="App\Security\EmailVerifier"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.jIxfAsi.App\Controller\RegistrationController"/>
+      </call>
+    </service>
+    <service id="App\Controller\SecurityController" class="App\Controller\SecurityController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.jIxfAsi.App\Controller\SecurityController"/>
+      </call>
+    </service>
     <service id="App\Controller\UserController" class="App\Controller\UserController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
       <tag name="container.service_subscriber"/>
@@ -394,6 +414,9 @@
       <tag name="form.type"/>
     </service>
     <service id="App\Form\LigneFraisHorsForfaitType" class="App\Form\LigneFraisHorsForfaitType" autowire="true" autoconfigure="true">
+      <tag name="form.type"/>
+    </service>
+    <service id="App\Form\RegistrationFormType" class="App\Form\RegistrationFormType" autowire="true" autoconfigure="true">
       <tag name="form.type"/>
     </service>
     <service id="App\Form\UserType" class="App\Form\UserType" autowire="true" autoconfigure="true">
@@ -422,6 +445,14 @@
     <service id="App\Repository\UserRepository" class="App\Repository\UserRepository" autowire="true" autoconfigure="true">
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
+    </service>
+    <service id="App\Security\AppCustomAuthenticator" class="App\Security\AppCustomAuthenticator" autowire="true" autoconfigure="true">
+      <argument type="service" id="router.default"/>
+    </service>
+    <service id="App\Security\EmailVerifier" class="App\Security\EmailVerifier" autowire="true" autoconfigure="true">
+      <argument type="service" id="symfonycasts.verify_email.helper"/>
+      <argument type="service" id="mailer.mailer"/>
+      <argument type="service" id="doctrine.orm.default_entity_manager"/>
     </service>
     <service id="argument_metadata_factory" class="Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadataFactory"/>
     <service id="response_listener" class="Symfony\Component\HttpKernel\EventListener\ResponseListener">
@@ -1208,6 +1239,7 @@
         <argument>App\Form\FraisForfaitType</argument>
         <argument>App\Form\LigneFraisForfaitType</argument>
         <argument>App\Form\LigneFraisHorsForfaitType</argument>
+        <argument>App\Form\RegistrationFormType</argument>
         <argument>App\Form\UserType</argument>
         <argument>Symfony\Component\Form\Extension\Core\Type\FormType</argument>
         <argument>Symfony\Component\Form\Extension\Core\Type\ChoiceType</argument>
@@ -1665,6 +1697,7 @@
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/validator/Resources/translations/validators.ar.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/form/Resources/translations/validators.ar.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/security-core/Resources/translations/security.ar.xlf</argument>
+            <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfonycasts/verify-email-bundle/src/Resources/translations/VerifyEmailBundle.ar.xlf</argument>
           </argument>
           <argument key="az" type="collection">
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/validator/Resources/translations/validators.az.xlf</argument>
@@ -1695,6 +1728,7 @@
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/validator/Resources/translations/validators.cs.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/form/Resources/translations/validators.cs.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/security-core/Resources/translations/security.cs.xlf</argument>
+            <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfonycasts/verify-email-bundle/src/Resources/translations/VerifyEmailBundle.cs.xlf</argument>
           </argument>
           <argument key="cy" type="collection">
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/validator/Resources/translations/validators.cy.xlf</argument>
@@ -1708,6 +1742,7 @@
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/validator/Resources/translations/validators.de.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/form/Resources/translations/validators.de.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/security-core/Resources/translations/security.de.xlf</argument>
+            <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfonycasts/verify-email-bundle/src/Resources/translations/VerifyEmailBundle.de.xlf</argument>
           </argument>
           <argument key="el" type="collection">
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/validator/Resources/translations/validators.el.xlf</argument>
@@ -1718,11 +1753,13 @@
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/validator/Resources/translations/validators.en.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/form/Resources/translations/validators.en.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/security-core/Resources/translations/security.en.xlf</argument>
+            <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfonycasts/verify-email-bundle/src/Resources/translations/VerifyEmailBundle.en.xlf</argument>
           </argument>
           <argument key="es" type="collection">
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/validator/Resources/translations/validators.es.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/form/Resources/translations/validators.es.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/security-core/Resources/translations/security.es.xlf</argument>
+            <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfonycasts/verify-email-bundle/src/Resources/translations/VerifyEmailBundle.es.xlf</argument>
           </argument>
           <argument key="et" type="collection">
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/validator/Resources/translations/validators.et.xlf</argument>
@@ -1743,11 +1780,13 @@
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/validator/Resources/translations/validators.fi.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/form/Resources/translations/validators.fi.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/security-core/Resources/translations/security.fi.xlf</argument>
+            <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfonycasts/verify-email-bundle/src/Resources/translations/VerifyEmailBundle.fi.xlf</argument>
           </argument>
           <argument key="fr" type="collection">
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/validator/Resources/translations/validators.fr.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/form/Resources/translations/validators.fr.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/security-core/Resources/translations/security.fr.xlf</argument>
+            <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfonycasts/verify-email-bundle/src/Resources/translations/VerifyEmailBundle.fr.xlf</argument>
           </argument>
           <argument key="gl" type="collection">
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/validator/Resources/translations/validators.gl.xlf</argument>
@@ -1768,6 +1807,7 @@
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/validator/Resources/translations/validators.hu.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/form/Resources/translations/validators.hu.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/security-core/Resources/translations/security.hu.xlf</argument>
+            <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfonycasts/verify-email-bundle/src/Resources/translations/VerifyEmailBundle.hu.xlf</argument>
           </argument>
           <argument key="hy" type="collection">
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/validator/Resources/translations/validators.hy.xlf</argument>
@@ -1783,11 +1823,13 @@
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/validator/Resources/translations/validators.it.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/form/Resources/translations/validators.it.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/security-core/Resources/translations/security.it.xlf</argument>
+            <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfonycasts/verify-email-bundle/src/Resources/translations/VerifyEmailBundle.it.xlf</argument>
           </argument>
           <argument key="ja" type="collection">
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/validator/Resources/translations/validators.ja.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/form/Resources/translations/validators.ja.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/security-core/Resources/translations/security.ja.xlf</argument>
+            <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfonycasts/verify-email-bundle/src/Resources/translations/VerifyEmailBundle.ja.xlf</argument>
           </argument>
           <argument key="lb" type="collection">
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/validator/Resources/translations/validators.lb.xlf</argument>
@@ -1823,6 +1865,7 @@
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/validator/Resources/translations/validators.nl.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/form/Resources/translations/validators.nl.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/security-core/Resources/translations/security.nl.xlf</argument>
+            <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfonycasts/verify-email-bundle/src/Resources/translations/VerifyEmailBundle+intl-icu.nl.xlf</argument>
           </argument>
           <argument key="nn" type="collection">
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/validator/Resources/translations/validators.nn.xlf</argument>
@@ -1838,11 +1881,13 @@
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/validator/Resources/translations/validators.pl.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/form/Resources/translations/validators.pl.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/security-core/Resources/translations/security.pl.xlf</argument>
+            <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfonycasts/verify-email-bundle/src/Resources/translations/VerifyEmailBundle.pl.xlf</argument>
           </argument>
           <argument key="pt" type="collection">
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/validator/Resources/translations/validators.pt.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/form/Resources/translations/validators.pt.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/security-core/Resources/translations/security.pt.xlf</argument>
+            <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfonycasts/verify-email-bundle/src/Resources/translations/VerifyEmailBundle.pt.xlf</argument>
           </argument>
           <argument key="pt_BR" type="collection">
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/validator/Resources/translations/validators.pt_BR.xlf</argument>
@@ -1853,16 +1898,19 @@
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/validator/Resources/translations/validators.ro.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/form/Resources/translations/validators.ro.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/security-core/Resources/translations/security.ro.xlf</argument>
+            <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfonycasts/verify-email-bundle/src/Resources/translations/VerifyEmailBundle.ro.xlf</argument>
           </argument>
           <argument key="ru" type="collection">
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/validator/Resources/translations/validators.ru.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/form/Resources/translations/validators.ru.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/security-core/Resources/translations/security.ru.xlf</argument>
+            <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfonycasts/verify-email-bundle/src/Resources/translations/VerifyEmailBundle.ru.xlf</argument>
           </argument>
           <argument key="sk" type="collection">
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/validator/Resources/translations/validators.sk.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/form/Resources/translations/validators.sk.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/security-core/Resources/translations/security.sk.xlf</argument>
+            <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfonycasts/verify-email-bundle/src/Resources/translations/VerifyEmailBundle.sk.xlf</argument>
           </argument>
           <argument key="sl" type="collection">
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/validator/Resources/translations/validators.sl.xlf</argument>
@@ -1903,11 +1951,13 @@
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/validator/Resources/translations/validators.tr.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/form/Resources/translations/validators.tr.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/security-core/Resources/translations/security.tr.xlf</argument>
+            <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfonycasts/verify-email-bundle/src/Resources/translations/VerifyEmailBundle.tr.xlf</argument>
           </argument>
           <argument key="uk" type="collection">
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/validator/Resources/translations/validators.uk.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/form/Resources/translations/validators.uk.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/security-core/Resources/translations/security.uk.xlf</argument>
+            <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfonycasts/verify-email-bundle/src/Resources/translations/VerifyEmailBundle.uk.xlf</argument>
           </argument>
           <argument key="uz" type="collection">
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/validator/Resources/translations/validators.uz.xlf</argument>
@@ -1929,11 +1979,15 @@
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/form/Resources/translations/validators.zh_TW.xlf</argument>
             <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/security-core/Resources/translations/security.zh_TW.xlf</argument>
           </argument>
+          <argument key="sr" type="collection">
+            <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfonycasts/verify-email-bundle/src/Resources/translations/VerifyEmailBundle.sr.xlf</argument>
+          </argument>
         </argument>
         <argument key="scanned_directories" type="collection">
           <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/validator/Resources/translations</argument>
           <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/form/Resources/translations</argument>
           <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/security-core/Resources/translations</argument>
+          <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfonycasts/verify-email-bundle/src/Resources/translations</argument>
           <argument>/Applications/MAMP/htdocs/Symfony/translations</argument>
           <argument>/Applications/MAMP/htdocs/Symfony/vendor/symfony/framework-bundle/translations</argument>
           <argument>/Applications/MAMP/htdocs/Symfony/vendor/doctrine/doctrine-bundle/translations</argument>
@@ -1953,6 +2007,7 @@
             <argument>vendor/symfony/validator/Resources/translations</argument>
             <argument>vendor/symfony/form/Resources/translations</argument>
             <argument>vendor/symfony/security-core/Resources/translations</argument>
+            <argument>vendor/symfonycasts/verify-email-bundle/src/Resources/translations</argument>
             <argument>translations</argument>
             <argument>vendor/symfony/framework-bundle/translations</argument>
             <argument>vendor/doctrine/doctrine-bundle/translations</argument>
@@ -3319,7 +3374,7 @@
       <argument type="service" id="form.registry"/>
     </service>
     <service id="form.extension" class="Symfony\Component\Form\Extension\DependencyInjection\DependencyInjectionExtension">
-      <argument type="service" id=".service_locator.NIPOsbe"/>
+      <argument type="service" id=".service_locator.OBwOQ6f"/>
       <argument type="collection">
         <argument key="Symfony\Component\Form\Extension\Core\Type\FormType" type="iterator">
           <argument type="service" id="form.type_extension.form.transformation_failure_handling"/>
@@ -4837,6 +4892,12 @@
           <argument>suggestFunction</argument>
         </argument>
       </call>
+      <call method="registerUndefinedTokenParserCallback">
+        <argument type="collection">
+          <argument type="service" id="twig.missing_extension_suggestor"/>
+          <argument>suggestTag</argument>
+        </argument>
+      </call>
       <configurator service="twig.configurator.environment" method="configure"/>
     </service>
     <service id="twig.app_variable" class="Symfony\Bridge\Twig\AppVariable">
@@ -5286,6 +5347,14 @@
       <argument type="service" id="request_stack" on-invalid="null"/>
       <argument type="service" id="router.default" on-invalid="null"/>
       <argument type="service" id="security.token_storage" on-invalid="null"/>
+      <call method="registerListener">
+        <argument>main</argument>
+        <argument>app_logout</argument>
+        <argument>logout</argument>
+        <argument>_csrf_token</argument>
+        <argument>null</argument>
+        <argument>null</argument>
+      </call>
     </service>
     <service id="security.user.provider.missing" class="Symfony\Component\Security\Core\User\MissingUserProvider" abstract="true">
       <argument type="abstract">firewall</argument>
@@ -5589,7 +5658,9 @@
       <argument type="service" id=".service_locator.zJyh7qS"/>
       <argument type="service" id=".service_locator.XsyfP82"/>
       <argument type="collection">
-        <argument key="main" type="collection"/>
+        <argument key="main" type="collection">
+          <argument type="service" id="App\Security\AppCustomAuthenticator"/>
+        </argument>
       </argument>
       <argument>false</argument>
       <call method="setName">
@@ -5636,10 +5707,12 @@
       <argument>false</argument>
       <argument>security.user.provider.concrete.app_user_provider</argument>
       <argument>main</argument>
+      <argument>App\Security\AppCustomAuthenticator</argument>
       <argument>null</argument>
       <argument>null</argument>
-      <argument>null</argument>
-      <argument type="collection"/>
+      <argument type="collection">
+        <argument>App\Security\AppCustomAuthenticator</argument>
+      </argument>
       <argument>null</argument>
     </service>
     <service id="security.listener.main.user_provider" class="Symfony\Component\Security\Http\EventListener\UserProviderListener">
@@ -5661,6 +5734,22 @@
         <argument type="collection">
           <argument type="service_closure" id="security.listener.session.main"/>
           <argument>onSuccessfulLogin</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
+      <call method="addListener">
+        <argument>Symfony\Component\Security\Http\Event\LogoutEvent</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="security.logout.listener.default.main"/>
+          <argument>onLogout</argument>
+        </argument>
+        <argument>64</argument>
+      </call>
+      <call method="addListener">
+        <argument>Symfony\Component\Security\Http\Event\LogoutEvent</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="security.logout.listener.session.main"/>
+          <argument>onLogout</argument>
         </argument>
         <argument>0</argument>
       </call>
@@ -5741,9 +5830,29 @@
       <tag name="kernel.event_subscriber" dispatcher="security.event_dispatcher.main"/>
       <argument type="service" id="security.authentication.session_strategy"/>
     </service>
+    <service id="security.logout_listener.main" class="Symfony\Component\Security\Http\Firewall\LogoutListener">
+      <argument type="service" id="security.token_storage"/>
+      <argument type="service" id="security.http_utils"/>
+      <argument type="service" id="security.event_dispatcher.main"/>
+      <argument type="collection">
+        <argument key="csrf_parameter">_csrf_token</argument>
+        <argument key="csrf_token_id">logout</argument>
+        <argument key="logout_path">app_logout</argument>
+      </argument>
+    </service>
+    <service id="security.logout.listener.default.main" class="Symfony\Component\Security\Http\EventListener\DefaultLogoutListener">
+      <tag name="kernel.event_subscriber" dispatcher="security.event_dispatcher.main"/>
+      <argument type="service" id="security.http_utils"/>
+      <argument>/</argument>
+    </service>
+    <service id="security.logout.listener.session.main" class="Symfony\Component\Security\Http\EventListener\SessionLogoutListener">
+      <tag name="kernel.event_subscriber" dispatcher="security.event_dispatcher.main"/>
+    </service>
     <service id="security.authenticator.manager.main" class="Symfony\Component\Security\Http\Authentication\AuthenticatorManager">
       <tag name="monolog.logger" channel="security"/>
-      <argument type="collection"/>
+      <argument type="collection">
+        <argument type="service" id="App\Security\AppCustomAuthenticator"/>
+      </argument>
       <argument type="service" id="security.token_storage"/>
       <argument type="service" id="security.event_dispatcher.main"/>
       <argument>main</argument>
@@ -5764,7 +5873,7 @@
       <argument type="service" id="security.authentication.trust_resolver"/>
       <argument type="service" id="security.http_utils"/>
       <argument>main</argument>
-      <argument>null</argument>
+      <argument type="service" id="App\Security\AppCustomAuthenticator"/>
       <argument>null</argument>
       <argument>null</argument>
       <argument type="service" id="monolog.logger.security" on-invalid="null"/>
@@ -5778,7 +5887,7 @@
         <argument type="service" id="security.access_listener"/>
       </argument>
       <argument type="service" id="security.exception_listener.main"/>
-      <argument>null</argument>
+      <argument type="service" id="security.logout_listener.main"/>
       <argument type="service" id="security.firewall.map.config.main"/>
       <argument type="service" id="security.untracked_token_storage"/>
     </service>
@@ -6106,6 +6215,21 @@
     <service id="framework_extra_bundle.argument_name_convertor" class="Sensio\Bundle\FrameworkExtraBundle\Request\ArgumentNameConverter">
       <argument type="service" id="argument_metadata_factory"/>
     </service>
+    <service id="symfonycasts.verify_email.token_generator" class="SymfonyCasts\Bundle\VerifyEmail\Generator\VerifyEmailTokenGenerator">
+      <argument>%env(APP_SECRET)%</argument>
+    </service>
+    <service id="symfonycasts.verify_email.query_utility" class="SymfonyCasts\Bundle\VerifyEmail\Util\VerifyEmailQueryUtility"/>
+    <service id="symfonycasts.verify_email.uri_signer" class="Symfony\Component\HttpKernel\UriSigner">
+      <argument>%env(APP_SECRET)%</argument>
+      <argument>signature</argument>
+    </service>
+    <service id="symfonycasts.verify_email.helper" class="SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelper">
+      <argument type="service" id="router.default"/>
+      <argument type="service" id="symfonycasts.verify_email.uri_signer"/>
+      <argument type="service" id="symfonycasts.verify_email.query_utility"/>
+      <argument type="service" id="symfonycasts.verify_email.token_generator"/>
+      <argument>3600</argument>
+    </service>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\EtatController" class="App\Controller\EtatController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\EtatController" class="App\Controller\EtatController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\EtatController" class="App\Controller\EtatController" autowire="true" autoconfigure="true" abstract="true"/>
@@ -6121,6 +6245,12 @@
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\LigneFraisHorsForfaitController" class="App\Controller\LigneFraisHorsForfaitController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\LigneFraisHorsForfaitController" class="App\Controller\LigneFraisHorsForfaitController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\LigneFraisHorsForfaitController" class="App\Controller\LigneFraisHorsForfaitController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\RegistrationController" class="App\Controller\RegistrationController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\RegistrationController" class="App\Controller\RegistrationController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\RegistrationController" class="App\Controller\RegistrationController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\SecurityController" class="App\Controller\SecurityController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\SecurityController" class="App\Controller\SecurityController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\SecurityController" class="App\Controller\SecurityController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\UserController" class="App\Controller\UserController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\UserController" class="App\Controller\UserController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\UserController" class="App\Controller\UserController" autowire="true" autoconfigure="true" abstract="true"/>
@@ -6134,6 +6264,8 @@
     <service id=".abstract.instanceof.App\Form\LigneFraisForfaitType" class="App\Form\LigneFraisForfaitType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\LigneFraisHorsForfaitType" class="App\Form\LigneFraisHorsForfaitType" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Form\LigneFraisHorsForfaitType" class="App\Form\LigneFraisHorsForfaitType" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\RegistrationFormType" class="App\Form\RegistrationFormType" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Form\RegistrationFormType" class="App\Form\RegistrationFormType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\UserType" class="App\Form\UserType" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Form\UserType" class="App\Form\UserType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\EtatRepository" class="App\Repository\EtatRepository" autowire="true" abstract="true"/>
@@ -6558,6 +6690,25 @@
         <argument key="ligneFraisHorsForfaitRepository" type="service_closure" id="App\Repository\LigneFraisHorsForfaitRepository"/>
       </argument>
     </service>
+    <service id=".service_locator.YU8H6ve" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="entityManager" type="service_closure" id="doctrine.orm.default_entity_manager"/>
+        <argument key="userPasswordHasher" type="service_closure" id="security.user_password_hasher"/>
+      </argument>
+    </service>
+    <service id=".service_locator.q2ji3lu" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="translator" type="service_closure" id="translator.data_collector"/>
+      </argument>
+    </service>
+    <service id=".service_locator.zFcJjKU" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="authenticationUtils" type="service_closure" id="security.authentication_utils"/>
+      </argument>
+    </service>
     <service id=".service_locator.Q1F27w5" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -6577,7 +6728,7 @@
         <argument key="userRepository" type="service_closure" id="App\Repository\UserRepository"/>
       </argument>
     </service>
-    <service id=".service_locator.nyr8YRy" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.JfGMQG0" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Controller\EtatController::delete" type="service_closure" id=".service_locator.zht5omn"/>
@@ -6605,6 +6756,9 @@
         <argument key="App\Controller\LigneFraisHorsForfaitController::index" type="service_closure" id=".service_locator.t8MmAbd"/>
         <argument key="App\Controller\LigneFraisHorsForfaitController::new" type="service_closure" id=".service_locator.t8MmAbd"/>
         <argument key="App\Controller\LigneFraisHorsForfaitController::show" type="service_closure" id=".service_locator.4P_.3_9"/>
+        <argument key="App\Controller\RegistrationController::register" type="service_closure" id=".service_locator.YU8H6ve"/>
+        <argument key="App\Controller\RegistrationController::verifyUserEmail" type="service_closure" id=".service_locator.q2ji3lu"/>
+        <argument key="App\Controller\SecurityController::login" type="service_closure" id=".service_locator.zFcJjKU"/>
         <argument key="App\Controller\UserController::delete" type="service_closure" id=".service_locator.9uW928t"/>
         <argument key="App\Controller\UserController::edit" type="service_closure" id=".service_locator.9uW928t"/>
         <argument key="App\Controller\UserController::index" type="service_closure" id=".service_locator.Q1F27w5"/>
@@ -6641,6 +6795,9 @@
         <argument key="App\Controller\LigneFraisHorsForfaitController:index" type="service_closure" id=".service_locator.t8MmAbd"/>
         <argument key="App\Controller\LigneFraisHorsForfaitController:new" type="service_closure" id=".service_locator.t8MmAbd"/>
         <argument key="App\Controller\LigneFraisHorsForfaitController:show" type="service_closure" id=".service_locator.4P_.3_9"/>
+        <argument key="App\Controller\RegistrationController:register" type="service_closure" id=".service_locator.YU8H6ve"/>
+        <argument key="App\Controller\RegistrationController:verifyUserEmail" type="service_closure" id=".service_locator.q2ji3lu"/>
+        <argument key="App\Controller\SecurityController:login" type="service_closure" id=".service_locator.zFcJjKU"/>
         <argument key="App\Controller\UserController:delete" type="service_closure" id=".service_locator.9uW928t"/>
         <argument key="App\Controller\UserController:edit" type="service_closure" id=".service_locator.9uW928t"/>
         <argument key="App\Controller\UserController:index" type="service_closure" id=".service_locator.Q1F27w5"/>
@@ -6710,7 +6867,7 @@
       <argument type="service" id="debug.argument_resolver.not_tagged_controller.inner"/>
       <argument type="service" id="debug.stopwatch"/>
     </service>
-    <service id=".service_locator.NIPOsbe" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.OBwOQ6f" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Form\EtatType" type="service_closure" id="App\Form\EtatType"/>
@@ -6718,6 +6875,7 @@
         <argument key="App\Form\FraisForfaitType" type="service_closure" id="App\Form\FraisForfaitType"/>
         <argument key="App\Form\LigneFraisForfaitType" type="service_closure" id="App\Form\LigneFraisForfaitType"/>
         <argument key="App\Form\LigneFraisHorsForfaitType" type="service_closure" id="App\Form\LigneFraisHorsForfaitType"/>
+        <argument key="App\Form\RegistrationFormType" type="service_closure" id="App\Form\RegistrationFormType"/>
         <argument key="App\Form\UserType" type="service_closure" id="App\Form\UserType"/>
         <argument key="Symfony\Bridge\Doctrine\Form\Type\EntityType" type="service_closure" id="form.type.entity"/>
         <argument key="Symfony\Component\Form\Extension\Core\Type\ChoiceType" type="service_closure" id="form.type.choice"/>
@@ -7099,6 +7257,18 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.jIxfAsi" method="withContext"/>
     </service>
+    <service id=".service_locator.jIxfAsi.App\Controller\RegistrationController" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\RegistrationController"/>
+      <argument>App\Controller\RegistrationController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.jIxfAsi" method="withContext"/>
+    </service>
+    <service id=".service_locator.jIxfAsi.App\Controller\SecurityController" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\SecurityController"/>
+      <argument>App\Controller\SecurityController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.jIxfAsi" method="withContext"/>
+    </service>
     <service id=".service_locator.jIxfAsi.App\Controller\UserController" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="App\Controller\UserController"/>
       <argument>App\Controller\UserController</argument>
@@ -7277,12 +7447,12 @@
       <argument type="service" id="security.token_storage"/>
     </service>
     <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
-      <argument type="service" id=".service_locator.nyr8YRy"/>
+      <argument type="service" id=".service_locator.JfGMQG0"/>
     </service>
     <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver"/>
     <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver"/>
     <service id="debug.argument_resolver.not_tagged_controller.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
-      <argument type="service" id=".service_locator.nyr8YRy"/>
+      <argument type="service" id=".service_locator.JfGMQG0"/>
     </service>
     <service id="debug.traced.messenger.bus.default.inner" class="Symfony\Component\Messenger\MessageBus">
       <argument type="iterator">
@@ -8217,9 +8387,10 @@
     <service id="Psr\Log\LoggerInterface" alias="monolog.logger"/>
     <service id="sensio_framework_extra.converter.doctrine.orm.expression_language" alias="sensio_framework_extra.converter.doctrine.orm.expression_language.default"/>
     <service id="sensio_framework_extra.security.expression_language" alias="sensio_framework_extra.security.expression_language.default"/>
+    <service id="SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface" alias="symfonycasts.verify_email.helper"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.gSv9zYw" public="true"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.nyr8YRy"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.JfGMQG0"/>
     <service id="doctrine.id_generator_locator" alias=".service_locator.KLVvNIq"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="Psr\Log\LoggerInterface $requestLogger" alias="monolog.logger.request"/>
@@ -8241,9 +8412,10 @@
     <service id=".service_locator.h8Jkkd2" alias="messenger.retry_strategy_locator"/>
     <service id=".service_locator.XDGmiR3" alias=".1_ServiceLocator~0ALCO1p"/>
     <service id=".service_locator.0GV1BZZ" alias=".service_locator.gSv9zYw"/>
-    <service id=".service_locator.R6F.BI." alias=".service_locator.nyr8YRy"/>
+    <service id=".service_locator.riGN6sa" alias=".service_locator.YU8H6ve"/>
+    <service id=".service_locator.YLlQZ9f" alias=".service_locator.JfGMQG0"/>
     <service id=".service_locator.wKF4yn1" alias=".service_locator.19_mNxd"/>
-    <service id=".service_locator.blHB.Qz" alias=".service_locator.NIPOsbe"/>
+    <service id=".service_locator.KxUQj00" alias=".service_locator.OBwOQ6f"/>
     <service id=".service_locator.XW18Svm" alias=".service_locator.TcKhdzh"/>
     <service id=".service_locator.O24_MAy" alias=".service_locator.yY.p4P7"/>
     <service id=".service_locator._eRAkJb" alias=".service_locator.jIxfAsi"/>
@@ -8285,6 +8457,9 @@
     <service id=".service_locator.FaHKIgn" alias=".service_locator.t8MmAbd"/>
     <service id=".service_locator.xkI1QYc" alias=".service_locator.4P_.3_9"/>
     <service id=".service_locator.l5OptO8" alias=".service_locator.FE6UmYz"/>
+    <service id=".service_locator.DoCD.2o" alias=".service_locator.YU8H6ve"/>
+    <service id=".service_locator.426yQGu" alias=".service_locator.q2ji3lu"/>
+    <service id=".service_locator.URfgn8g" alias=".service_locator.zFcJjKU"/>
     <service id=".service_locator.HO7.gFw" alias=".service_locator.Q1F27w5"/>
     <service id=".service_locator.Zp0NSXM" alias=".service_locator.4T4EJFR"/>
     <service id=".service_locator.S89QQxH" alias=".service_locator.9uW928t"/>

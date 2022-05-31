@@ -13,11 +13,8 @@ class LigneFraisForfaitType extends AbstractType
     {
         $builder
             ->add('quantite')
-            ->add('date')
-            ->add('montant')
-            ->add('libelle')
-            ->add('fiche_frais')
-            ->add('frais_forfais')
+            ->add('idVisiteur')
+            ->add('idFraisForfait')
         ;
     }
 

@@ -10,10 +10,11 @@
             <tr>
                 <th>Id</th>
                 <th>Email</th>
-                <th>Name</th>
-                <th>Lastname</th>
-                <th>DateNaiss</th>
+                <th>Roles</th>
                 <th>Password</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Datenaiss</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -22,10 +23,11 @@
             <tr>
                 <td>{{ user.id }}</td>
                 <td>{{ user.email }}</td>
-                <td>{{ user.name }}</td>
-                <td>{{ user.lastname }}</td>
-                <td>{{ user.dateNaiss ? user.dateNaiss|date('Y-m-d') : '' }}</td>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
                 <td>{{ user.password }}</td>
+                <td>{{ user.nom }}</td>
+                <td>{{ user.prenom }}</td>
+                <td>{{ user.datenaiss ? user.datenaiss|date('Y-m-d') : '' }}</td>
                 <td>
                     <a href="{{ path('app_user_show', {'id': user.id}) }}">show</a>
                     <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
@@ -33,7 +35,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="7">no records found</td>
+                <td colspan="8">no records found</td>
             </tr>
         {% endfor %}
         </tbody>

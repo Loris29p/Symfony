@@ -9,8 +9,8 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Nb_justificatif</th>
-                <th>Montant</th>
+                <th>NbJustificatif</th>
+                <th>MontantValide</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -19,7 +19,7 @@
             <tr>
                 <td>{{ fiche_frai.id }}</td>
                 <td>{{ fiche_frai.nbJustificatif }}</td>
-                <td>{{ fiche_frai.montant }}</td>
+                <td>{{ fiche_frai.montantValide }}</td>
                 <td>
                     <a href="{{ path('app_fiche_frais_show', {'id': fiche_frai.id}) }}">show</a>
                     <a href="{{ path('app_fiche_frais_edit', {'id': fiche_frai.id}) }}">edit</a>

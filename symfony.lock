@@ -15,10 +15,10 @@
         "version": "1.6.8"
     },
     "doctrine/common": {
-        "version": "3.2.2"
+        "version": "3.3.0"
     },
     "doctrine/dbal": {
-        "version": "3.3.4"
+        "version": "3.3.5"
     },
     "doctrine/deprecations": {
         "version": "v0.5.3"
@@ -66,10 +66,10 @@
         "version": "3.5.0"
     },
     "doctrine/orm": {
-        "version": "2.11.2"
+        "version": "2.12.1"
     },
     "doctrine/persistence": {
-        "version": "2.4.1"
+        "version": "2.5.1"
     },
     "doctrine/sql-formatter": {
         "version": "1.1.2"
@@ -84,7 +84,7 @@
         "version": "4.5.1"
     },
     "monolog/monolog": {
-        "version": "2.4.0"
+        "version": "2.5.0"
     },
     "nikic/php-parser": {
         "version": "v4.13.2"
@@ -99,7 +99,7 @@
         "version": "1.6.1"
     },
     "phpstan/phpdoc-parser": {
-        "version": "1.4.2"
+        "version": "1.4.5"
     },
     "psr/cache": {
         "version": "3.0.0"
@@ -259,7 +259,7 @@
         ]
     },
     "symfony/maker-bundle": {
-        "version": "1.38",
+        "version": "1.40",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "master",
@@ -494,11 +494,14 @@
     "symfony/yaml": {
         "version": "v6.0.3"
     },
+    "symfonycasts/verify-email-bundle": {
+        "version": "v1.10.0"
+    },
     "twig/extra-bundle": {
         "version": "v3.3.8"
     },
     "twig/twig": {
-        "version": "v3.3.9"
+        "version": "v3.3.10"
     },
     "webmozart/assert": {
         "version": "1.10.0"

@@ -15,7 +15,6 @@ class LigneFraisHorsForfaitType extends AbstractType
             ->add('date')
             ->add('montant')
             ->add('libelle')
-            ->add('fiche_frais')
         ;
     }
 

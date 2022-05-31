@@ -12,10 +12,10 @@ class FicheFraisType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nb_justificatif')
-            ->add('montant')
-            ->add('user')
-            ->add('etat')
+            ->add('nbJustificatif')
+            ->add('montantValide')
+            ->add('idVisiteur')
+            ->add('Etat')
         ;
     }
 

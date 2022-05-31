@@ -9,6 +9,8 @@ use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * @extends ServiceEntityRepository<LigneFraisHorsForfait>
+ *
  * @method LigneFraisHorsForfait|null find($id, $lockMode = null, $lockVersion = null)
  * @method LigneFraisHorsForfait|null findOneBy(array $criteria, array $orderBy = null)
  * @method LigneFraisHorsForfait[]    findAll()
